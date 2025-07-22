@@ -1,81 +1,87 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Textarea } from "@/components/ui/textarea"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Copy, Download, Upload } from "lucide-react"
+import * as React from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Copy, Download, Upload } from "lucide-react";
 
 export function Base64EncoderTool() {
-  const [selectedFile, setSelectedFile] = React.useState<File | null>(null)
-  const [base64String, setBase64String] = React.useState("")
-  const [imagePreview, setImagePreview] = React.useState("")
-  const [decodedImage, setDecodedImage] = React.useState("")
+  const [selectedFile, setSelectedFile] = React.useState<File | null>(null);
+  const [base64String, setBase64String] = React.useState("");
+  const [imagePreview, setImagePreview] = React.useState("");
+  const [decodedImage, setDecodedImage] = React.useState("");
 
   const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0]
-    if (!file) return
+    const file = e.target.files?.[0];
+    if (!file) return;
 
     if (!file.type.startsWith("image/")) {
-      alert("Por favor selecciona un archivo de imagen")
-      return
+      alert("Por favor selecciona un archivo de imagen");
+      return;
     }
 
-    setSelectedFile(file)
+    setSelectedFile(file);
 
-    const reader = new FileReader()
+    const reader = new FileReader();
     reader.onload = (event) => {
-      const result = event.target?.result as string
-      setBase64String(result)
-      setImagePreview(result)
-    }
-    reader.readAsDataURL(file)
-  }
+      const result = event.target?.result as string;
+      setBase64String(result);
+      setImagePreview(result);
+    };
+    reader.readAsDataURL(file);
+  };
 
   const handleBase64Decode = () => {
     if (!base64String.trim()) {
-      alert("Por favor ingresa un código Base64")
-      return
+      alert("Por favor ingresa un código Base64");
+      return;
     }
 
     try {
       // Verificar si es una imagen válida
       if (!base64String.startsWith("data:image/")) {
-        alert("El código Base64 no parece ser una imagen válida")
-        return
+        alert("El código Base64 no parece ser una imagen válida");
+        return;
       }
 
-      setDecodedImage(base64String)
+      setDecodedImage(base64String);
     } catch (error) {
-      alert("Error al decodificar el Base64")
+      alert("Error al decodificar el Base64");
     }
-  }
+  };
 
   const copyToClipboard = async () => {
     try {
-      await navigator.clipboard.writeText(base64String)
-      alert("Código Base64 copiado al portapapeles")
+      await navigator.clipboard.writeText(base64String);
+      alert("Código Base64 copiado al portapapeles");
     } catch (error) {
-      alert("Error al copiar al portapapeles")
+      alert("Error al copiar al portapapeles");
     }
-  }
+  };
 
   const downloadImage = () => {
     if (!decodedImage && !imagePreview) {
-      alert("No hay imagen para descargar")
-      return
+      alert("No hay imagen para descargar");
+      return;
     }
 
-    const link = document.createElement("a")
-    link.href = decodedImage || imagePreview
-    link.download = `imagen_${Date.now()}.png`
-    document.body.appendChild(link)
-    link.click()
-    document.body.removeChild(link)
-  }
+    const link = document.createElement("a");
+    link.href = decodedImage || imagePreview;
+    link.download = `imagen_${Date.now()}.png`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
 
   return (
     <div className="space-y-6">
@@ -89,12 +95,19 @@ export function Base64EncoderTool() {
           <Card>
             <CardHeader>
               <CardTitle>Codificar Imagen a Base64</CardTitle>
-              <CardDescription>Selecciona una imagen para convertirla a código Base64</CardDescription>
+              <CardDescription>
+                Selecciona una imagen para convertirla a código Base64
+              </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <div>
                 <Label htmlFor="image-file">Seleccionar Imagen</Label>
-                <Input id="image-file" type="file" accept="image/*" onChange={handleFileSelect} />
+                <Input
+                  id="image-file"
+                  type="file"
+                  accept="image/*"
+                  onChange={handleFileSelect}
+                />
               </div>
 
               {imagePreview && (
@@ -140,7 +153,9 @@ export function Base64EncoderTool() {
           <Card>
             <CardHeader>
               <CardTitle>Decodificar Base64 a Imagen</CardTitle>
-              <CardDescription>Pega el código Base64 para convertirlo a imagen</CardDescription>
+              <CardDescription>
+                Pega el código Base64 para convertirlo a imagen
+              </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <div>
@@ -189,5 +204,5 @@ export function Base64EncoderTool() {
         </TabsContent>
       </Tabs>
     </div>
-  )
+  );
 }
