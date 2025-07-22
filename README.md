@@ -60,7 +60,7 @@ docker build -t dashboard_herramientas .
 ### Ejecutar el contenedor:
 
 ```bash
-docker run -d -p 3226:80 --name dashboard_herramientas dashboard_herramientas
+docker run -d -p 3226:8080 --name dashboard_herramientas dashboard_herramientas
 ```
 
 ## Estructura del Proyecto
