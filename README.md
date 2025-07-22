@@ -47,7 +47,7 @@ Una aplicación web desarrollada con Next.js y shadcn/ui que incluye herramienta
    yarn dev
    ```
 
-4. Abre [http://localhost:3000](http://localhost:3000) en tu navegador.
+4. Abre [http://localhost:3226](http://localhost:3226) en tu navegador.
 
 ## Uso con Docker
 
@@ -60,7 +60,7 @@ docker build -t dashboard_herramientas .
 ### Ejecutar el contenedor:
 
 ```bash
-docker run -p 3000:3000 dashboard_herramientas
+docker run -d -p 3226:80 --name dashboard_herramientas dashboard_herramientas
 ```
 
 ## Estructura del Proyecto
