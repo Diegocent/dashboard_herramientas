@@ -20,7 +20,9 @@ export function isWeekend(dateString: string): boolean {
 }
 
 export function isHoliday(dateString: string, holidays: string[]): boolean {
-  return holidays.includes(dateString);
+  const [year, month, day] = dateString.split("-");
+  const formatted = `${day}/${month}/${year}`;
+  return holidays.includes(formatted);
 }
 
 export function calculateWorkingHours(

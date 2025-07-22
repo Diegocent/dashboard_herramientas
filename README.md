@@ -1,4 +1,4 @@
-# Time Tracker & Image Tools
+# Dashboard de herramientas
 
 Una aplicación web desarrollada con Next.js y shadcn/ui que incluye herramientas para análisis de horas trabajadas y codificación/decodificación de imágenes en Base64.
 
@@ -25,28 +25,31 @@ Una aplicación web desarrollada con Next.js y shadcn/ui que incluye herramienta
 ## Instalación
 
 1. Clona el repositorio:
-   \`\`\`bash
-   git clone <repository-url>
+
+   ```bash
+   git clone https://github.com/Diegocent/dashboard_herramientas
    cd dashboard_herramientas
-   \`\`\`
+   ```
 
 2. Instala las dependencias:
-   \`\`\`bash
+   ```bash
    npm install
+   ```
 
 # o
 
 yarn install
-\`\`\`
+
+````
 
 3. Ejecuta el servidor de desarrollo:
-   \`\`\`bash
+   ```bash
    npm run dev
 
 # o
 
 yarn dev
-\`\`\`
+````
 
 4. Abre [http://localhost:3000](http://localhost:3000) en tu navegador.
 
@@ -54,19 +57,19 @@ yarn dev
 
 ### Construir la imagen:
 
-\`\`\`bash
+```bash
 docker build -t dashboard_herramientas .
-\`\`\`
+```
 
 ### Ejecutar el contenedor:
 
-\`\`\`bash
+```bash
 docker run -p 3000:3000 dashboard_herramientas
-\`\`\`
+```
 
 ## Estructura del Proyecto
 
-\`\`\`
+```
 ├── app/ # Páginas de Next.js
 ├── components/ # Componentes React
 │ ├── ui/ # Componentes de shadcn/ui
@@ -78,7 +81,7 @@ docker run -p 3000:3000 dashboard_herramientas
 │ └── time-utils.ts # Utilidades de tiempo
 ├── Dockerfile # Configuración Docker
 └── package.json # Dependencias
-\`\`\`
+```
 
 ## Tecnologías Utilizadas
 
