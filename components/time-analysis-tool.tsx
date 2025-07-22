@@ -608,101 +608,94 @@ export function TimeAnalysisTool() {
           </CardHeader>
           <CardContent>
             <div className="w-full">
-              <div className="relative border rounded-md max-w-[85vw]">
-                <div className="overflow-auto max-h-[60vh]">
-                  <Table className="min-w-full">
-                    <TableHeader className="sticky top-0 z-20 bg-background">
-                      <TableRow>
+              <div className="relative overflow-auto max-h-[60vh] max-w-[85vw] border rounded-md">
+                <Table>
+                  <TableHeader className="sticky top-0 bg-background z-10">
+                    <TableRow className="bg-background font-semibold sticky bottom-0 z-10 border-t border-muted">
+                      {displayColumns.map((column) => (
+                        <TableHead
+                          key={column}
+                          className="whitespace-nowrap min-w-[100px] px-2"
+                        >
+                          <TooltipProvider>
+                            <Tooltip>
+                              <TooltipTrigger asChild>
+                                <span className="truncate max-w-[150px] block">
+                                  {column}
+                                </span>
+                              </TooltipTrigger>
+                              <TooltipContent>
+                                <p>{column}</p>
+                              </TooltipContent>
+                            </Tooltip>
+                          </TooltipProvider>
+                        </TableHead>
+                      ))}
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {processedData.map((row, index) => (
+                      <TableRow key={index}>
                         {displayColumns.map((column) => (
-                          <TableHead
+                          <TableCell
                             key={column}
-                            className="whitespace-nowrap min-w-[100px] px-2"
+                            className="whitespace-nowrap px-2 max-w-[200px]"
                           >
                             <TooltipProvider>
                               <Tooltip>
                                 <TooltipTrigger asChild>
-                                  <span className="truncate max-w-[150px] block">
-                                    {column}
+                                  <span className="truncate block">
+                                    {typeof row[column] === "number"
+                                      ? row[column].toString().replace(".", ",")
+                                      : row[column] || ""}
                                   </span>
                                 </TooltipTrigger>
                                 <TooltipContent>
-                                  <p>{column}</p>
+                                  <p>
+                                    {typeof row[column] === "number"
+                                      ? row[column].toString().replace(".", ",")
+                                      : row[column] || ""}
+                                  </p>
                                 </TooltipContent>
                               </Tooltip>
                             </TooltipProvider>
-                          </TableHead>
-                        ))}
-                      </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                      {processedData.map((row, index) => (
-                        <TableRow key={index}>
-                          {displayColumns.map((column) => (
-                            <TableCell
-                              key={column}
-                              className="whitespace-nowrap px-2 max-w-[200px]"
-                            >
-                              <TooltipProvider>
-                                <Tooltip>
-                                  <TooltipTrigger asChild>
-                                    <span className="truncate block">
-                                      {typeof row[column] === "number"
-                                        ? row[column]
-                                            .toString()
-                                            .replace(".", ",")
-                                        : row[column] || ""}
-                                    </span>
-                                  </TooltipTrigger>
-                                  <TooltipContent>
-                                    <p>
-                                      {typeof row[column] === "number"
-                                        ? row[column]
-                                            .toString()
-                                            .replace(".", ",")
-                                        : row[column] || ""}
-                                    </p>
-                                  </TooltipContent>
-                                </Tooltip>
-                              </TooltipProvider>
-                            </TableCell>
-                          ))}
-                        </TableRow>
-                      ))}
-
-                      {/* Fila de totales sticky al fondo */}
-                      <TableRow className="sticky bottom-0 bg-background z-30 border-t border-muted font-semibold">
-                        {displayColumns.map((column, index) => (
-                          <TableCell
-                            key={column}
-                            className="whitespace-nowrap px-2"
-                          >
-                            {index === 0
-                              ? "TOTALES"
-                              : column === "Horas Totales"
-                              ? processedData
-                                  .reduce(
-                                    (sum, row) =>
-                                      sum + (Number(row["Horas Totales"]) || 0),
-                                    0
-                                  )
-                                  .toString()
-                                  .replace(".", ",")
-                              : column === "Días Totales"
-                              ? processedData
-                                  .reduce(
-                                    (sum, row) =>
-                                      sum + (Number(row["Días Totales"]) || 0),
-                                    0
-                                  )
-                                  .toString()
-                                  .replace(".", ",")
-                              : ""}
                           </TableCell>
                         ))}
                       </TableRow>
-                    </TableBody>
-                  </Table>
-                </div>
+                    ))}
+                    {/* Fila de totales */}
+                    <TableRow className="bg-background font-semibold sticky bottom-0 z-10">
+                      {displayColumns.map((column, index) => (
+                        <TableCell
+                          key={column}
+                          className="whitespace-nowrap px-2"
+                        >
+                          {index === 0
+                            ? "TOTALES"
+                            : column === "Horas Totales"
+                            ? processedData
+                                .reduce(
+                                  (sum, row) =>
+                                    sum + (Number(row["Horas Totales"]) || 0),
+                                  0
+                                )
+                                .toString()
+                                .replace(".", ",")
+                            : column === "Días Totales"
+                            ? processedData
+                                .reduce(
+                                  (sum, row) =>
+                                    sum + (Number(row["Días Totales"]) || 0),
+                                  0
+                                )
+                                .toString()
+                                .replace(".", ",")
+                            : ""}
+                        </TableCell>
+                      ))}
+                    </TableRow>
+                  </TableBody>
+                </Table>
               </div>
             </div>
           </CardContent>
