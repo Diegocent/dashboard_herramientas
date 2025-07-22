@@ -19,7 +19,12 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { parseCSV } from "@/lib/csv-parser";
-import { calculateWorkingHours, isWeekend, isHoliday } from "@/lib/time-utils";
+import {
+  calculateWorkingHours,
+  isWeekend,
+  isHoliday,
+  calculateWorkingHoursAndDays,
+} from "@/lib/time-utils";
 import * as XLSX from "xlsx";
 import { Button } from "@/components/ui/button";
 import {
@@ -264,7 +269,6 @@ export function TimeAnalysisTool() {
 
   const processedData = React.useMemo(() => {
     let data = fileData;
-
     if (fileData.length && config.startTimeColumn && config.endTimeColumn) {
       data = fileData.map((row) => {
         const startTime = row[config.startTimeColumn];
@@ -289,16 +293,19 @@ export function TimeAnalysisTool() {
           };
         }
 
-        const hours = calculateWorkingHours(
+        const { totalHours, totalDays } = calculateWorkingHoursAndDays(
           startTime,
           endTime,
-          config.maxHours
+          config.startTime,
+          config.endTime,
+          config.maxHours,
+          holidays
         );
 
         return {
           ...row,
-          "Horas Totales": Math.max(0, hours),
-          "Días Totales": hours > 0 ? 1 : 0,
+          "Horas Totales": Math.max(0, totalHours),
+          "Días Totales": totalDays,
         };
       });
     }
@@ -608,7 +615,7 @@ export function TimeAnalysisTool() {
           </CardHeader>
           <CardContent>
             <div className="w-full">
-              <div className="relative overflow-auto max-h-[60vh] max-w-[85vw] border rounded-md">
+              <div className="relative overflow-auto max-h-[60vh] max-w-[65vw] border rounded-md">
                 <Table>
                   <TableHeader className="sticky top-0 bg-background z-10">
                     <TableRow className="bg-background font-semibold sticky bottom-0 z-10 border-t border-muted">
@@ -679,6 +686,7 @@ export function TimeAnalysisTool() {
                                     sum + (Number(row["Horas Totales"]) || 0),
                                   0
                                 )
+                                .toFixed(2)
                                 .toString()
                                 .replace(".", ",")
                             : column === "Días Totales"
@@ -688,6 +696,7 @@ export function TimeAnalysisTool() {
                                     sum + (Number(row["Días Totales"]) || 0),
                                   0
                                 )
+                                .toFixed(2)
                                 .toString()
                                 .replace(".", ",")
                             : ""}
