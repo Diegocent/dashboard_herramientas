@@ -32,24 +32,20 @@ Una aplicación web desarrollada con Next.js y shadcn/ui que incluye herramienta
    ```
 
 2. Instala las dependencias:
+
    ```bash
    npm install
+   // o
+   yarn install
    ```
 
-# o
-
-yarn install
-
-````
-
 3. Ejecuta el servidor de desarrollo:
+
    ```bash
    npm run dev
-
-# o
-
-yarn dev
-````
+   // o
+   yarn dev
+   ```
 
 4. Abre [http://localhost:3000](http://localhost:3000) en tu navegador.
 
@@ -114,3 +110,11 @@ docker run -p 3000:3000 dashboard_herramientas
 ## Autor
 
 © 2024 - Desarrollado por Diego Villalba.
+
+```
+
+```
+
+```
+
+```
